@@ -4,7 +4,7 @@
 $cadena = "Esta es una cadena de ejemplo";
 
 // Aplicar la expresión regular y reemplazar las letras iniciales y finales
-$nueva_cadena = preg_filter('/\b\w(\w*)\w\b/', '$1', $cadena);
+$nueva_cadena = preg_replace('/\b\w(\w*)\w\b/', '$1', $cadena);
 
 // Imprimir la cadena resultante
 echo $nueva_cadena;
