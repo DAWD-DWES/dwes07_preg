@@ -131,6 +131,11 @@ print_r(preg_filter($patrón, $sustitución, $sujeto));
 echo "preg_replace devuelve\n";
 print_r(preg_replace($patrón, $sustitución, $sujeto));
 
+echo "<h2>Preg_match_all</h2>";
+echo "<h3>Parejas de Vocales</h3>";
+$text = 'miau abuelo';
+$num =  preg_match_all('/[aeiou]{2,}/', $text, $matches); 
+
 
 echo "<h2>Preg_match_all</h2>";
 echo "<h3>Vocales</h3>";
