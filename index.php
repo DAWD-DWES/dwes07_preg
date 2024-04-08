@@ -1,6 +1,6 @@
 <?php
 
-echo '<h2>preg_coincidencia</h2>';
+echo '<h2>preg_match</h2>';
 
 echo '<h3>Comprobar si una cadena contiene solo dígitos</h3>';
 $texto = "123456";
