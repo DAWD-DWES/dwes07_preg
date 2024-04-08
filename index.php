@@ -1,207 +1,384 @@
 <?php
 
-// Definir la cadena de entrada
-$cadena = "Esta es una cadena de ejemplo";
+echo '<h2>preg_coincidencia</h2>';
 
-// Aplicar la expresión regular y reemplazar las letras iniciales y finales
-$nueva_cadena = preg_replace('/\b\w(\w*)\w\b/', '$1', $cadena);
-
-// Imprimir la cadena resultante
-echo $nueva_cadena;
-
-echo "<h2>Preg_match</h2>";
-echo "<h3>Correo electronico</h3>";
-$email = 'user@examplo.com';
-if (preg_match('/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', $email, $matches)) {
-    echo 'La dirección de correo electrónico ' . $email . ' es válida';
+echo '<h3>Comprobar si una cadena contiene solo dígitos</h3>';
+$texto = "123456";
+$patron = "/^\d+$/";
+if (preg_match($patron, $texto)) {
+    echo "La cadena contiene solo dígitos.";
 } else {
-    echo 'La dirección de correo electrónico ' . $email . ' es inválida';
+    echo "La cadena contiene caracteres no numéricos.";
 }
 
+echo '<h3>Cadena con letras y espacios en blanco</h3>';
+$texto = 'John Doe';
+$patron = '/^([a-zA-Z]+\s*)+$/';
+if (preg_match($patron, $texto, $coincidencias)) {
+    echo 'El nombre es: ' . $coincidencias[1];
+}
 
-echo "</br>";
-echo "<h3>Teléfono</h3>";
-$phone = '+17 (555) 1235-4567';
-if (preg_match('/^\+\d{1,2}\s\(\d{3}\)\s\d{3}-\d{4}$/', $phone, $matches, )) {
-    echo 'El número de teléfono ' . $phone . ' es válido';
+echo '<h3>Verificar si una cadena contiene una palabra específica</h3>';
+$texto = "Hola, bienvenido al tutorial de PHP.";
+$palabra = "tutorial";
+$patron = "/$palabra/i";
+if (preg_match($patron, $texto)) {
+    echo "La palabra '$palabra' fue encontrada en el texto.";
 } else {
-    echo 'El número de teléfono ' . $phone . ' es inválido';
+    echo "La palabra '$palabra' no fue encontrada en el texto.";
 }
 
-
-echo "</br>";
-echo "<h3>Teléfono</h3>";
-$telefono = '+1 (555) 123-4567';
-if (preg_match('/^\+(\d{1,3})\s\((\d{3})\)\s(\d{3}-\d{4})$/', $telefono, $matches)) {
-    echo 'El código de país es: ' . $matches[1] . ' y el número de teléfono es: ' . $matches[2] . ' ' . $matches[3];
-}
-
-
-echo "</br>";
-echo "<h3>Dirección IP</h3>";
-$ip = '192.168.0.1';
-if (preg_match('/^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/', $ip)) {
-    echo 'La dirección IP ' . $ip . ' es válida';
+echo '<h3>Correo electronico</h3>';
+$texto = 'user@ejemplo.com';
+$patron = '/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
+if (preg_match($patron, $texto, $coincidencias)) {
+    echo 'La dirección de correo electrónico ' . $texto . ' es válida';
 } else {
-    echo 'La dirección IP ' . $ip . ' es inválida';
+    echo 'La dirección de correo electrónico ' . $texto . ' es inválida';
 }
+echo '</br>';
+echo "<pre>";
+print_r($coincidencias);
+echo "<pre>";
 
-
-echo "</br>";
-echo "<h3>Nombre de usuario y dominio de una dirección de correo</h3>";
-$email = 'user@example.com';
-if (preg_match('/^([a-zA-Z0-9._-]+)@([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/', $email, $matches)) {
-    echo 'Nombre de usuario: ' . $matches[1] . '<br>';
-    echo 'Dominio: ' . $matches[2];
+echo '<h3>Teléfono</h3>';
+$texto = '+17 (555) 1235-4567';
+$patron = '/^\+\d{1,2}\s\(\d{3}\)\s\d{4}-\d{4}$/';
+if (preg_match($patron, $texto, $coincidencias,)) {
+    echo 'El número de teléfono ' . $texto . ' es válido';
 } else {
-    echo 'La dirección de correo electrónico es inválida';
+    echo 'El número de teléfono ' . $texto . ' es inválido';
 }
+echo '</br>';
+echo "<pre>";
+print_r($coincidencias);
+echo "<pre>";
 
-echo "</br>";
-echo "<h3>Extraer campos de fecha</h3>";
-$text = 'La fecha de hoy es 20/03/2023';
-if (preg_match('/(\d{2})\/(\d{2})\/(\d{4})/', $text, $matches)) {
-    echo 'La fecha es: ' . $matches[1] . '/' . $matches[2] . '/' . $matches[3];
+echo '<h3>Secciones del teléfono</h3>';
+$texto = '+1 (555) 123-4567';
+$patron = '/^\+(\d{1,3})\s\((\d{3})\)\s(\d{3}-\d{4})$/';
+if (preg_match($patron, $texto, $coincidencias)) {
+    echo 'El código de país es: ' . $coincidencias[1] . ' y el número de teléfono es: ' . $coincidencias[2] . ' ' . $coincidencias[3];
+}
+echo '</br>';
+echo "<pre>";
+print_r($coincidencias);
+echo "<pre>";
+
+echo '<h3>Extraer el nombre y la extensión de un archivo</h3>';
+$texto = 'documento.pdf';
+$patron = '/^([\w-]+)\.(\w+)$/';
+if (preg_match($patron, $texto, $coincidencias)) {
+    echo 'El nombre del archivo es: ' . $coincidencias[1] . ' y su extensión es: ' . $coincidencias[2];
+}
+echo '</br>';
+echo "<pre>";
+print_r($coincidencias);
+echo "<pre>";
+
+echo '<h3>Extraer campos de fecha</h3>';
+$texto = 'La fecha de hoy es 20/03/2023';
+$patron = '/(\d{2})\/(\d{2})\/(\d{4})/';
+if (preg_match($patron, $texto, $coincidencias)) {
+    echo 'La fecha es: ' . $coincidencias[1] . '/' . $coincidencias[2] . '/' . $coincidencias[3];
 } else {
     echo 'No se encontró una fecha en la cadena de texto';
 }
+echo '</br>';
+echo "<pre>";
+print_r($coincidencias);
+echo "<pre>";
 
-echo "</br>";
-echo "<h3>Protocolo, dominio y ruta de una URL</h3>";
-$url = 'https://www.ejemplo.com/ejemplo/ruta';
-if (preg_match('/^(\w+):\/\/([\w\.]+)\/(.*)$/', $url, $matches)) {
-    echo 'El protocolo es: ' . $matches[1] . ', el dominio es: ' . $matches[2] . ' y la ruta es: ' . $matches[3];
+echo '<h3>Nombre de usuario y dominio de una dirección de correo</h3>';
+$texto = 'user@example.com';
+$patron = '/^([a-zA-Z0-9._-]+)@([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/';
+if (preg_match($patron, $texto, $coincidencias)) {
+    echo 'Nombre de usuario: ' . $coincidencias[1] . '<br>';
+    echo 'Dominio: ' . $coincidencias[2];
+} else {
+    echo 'La dirección de correo electrónico es inválida';
+}
+echo '</br>';
+echo "<pre>";
+print_r($coincidencias);
+echo "<pre>";
+
+echo '<h3>Protocolo, dominio y ruta de una URL</h3>';
+$texto = 'https://www.ejemplo.com/ejemplo/ruta';
+$patron = '/^(\w+):\/\/([\w\.]+)\/(.*)$/';
+if (preg_match($patron, $texto, $coincidencias)) {
+    echo 'El protocolo es: ' . $coincidencias[1] . ', el dominio es: ' . $coincidencias[2] . ' y la ruta es: ' . $coincidencias[3];
 } else {
     echo 'la URL es inválida';
 }
+echo '</br>';
+echo "<pre>";
+print_r($coincidencias);
+echo "<pre>";
 
-
-echo "</br>";
-echo "<h3>Cadena con letras y espacios en blanco</h3>";
-$nombre = 'John Doe';
-if (preg_match('/^([a-zA-Z]+\s*)+$/', $nombre)) {
-    echo 'El nombre es' . $nombre;
+echo '<h3>Dirección IP</h3>';
+$texto = '192.168.0.1';
+$patron = '/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/';
+if (preg_match($patron, $texto, $coincidencias)) {
+    echo 'La dirección IP ' . $texto . ' es válida';
+} else {
+    echo 'La dirección IP ' . $texto . ' es inválida';
 }
+echo '</br>';
+echo "<pre>";
+print_r($coincidencias);
+echo "<pre>";
 
-
-echo "</br>";
-echo "<h3>Extraer el nombre y la extensión de un archivo</h3>";
-$archivo = 'documento.pdf';
-if (preg_match('/^([\w-]+)\.(\w+)$/', $archivo, $matches)) {
-    echo 'El nombre del archivo es: ' . $matches[1] . ' y su extensión es: ' . $matches[2];
+echo '<h3>Secciones de IP</h3>';
+$patron = '/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/';
+$texto = '192.168.1.15';
+if (preg_match($patron, $texto, $coincidencias)) {
+    echo "El primer octeto es: " . $coincidencias[1] . "\n";
+    echo "El segundo octeto es: " . $coincidencias[2] . "\n";
+    echo "El tercer octeto es: " . $coincidencias[3] . "\n";
+    echo "El cuarto octeto es: " . $coincidencias[4] . "\n";
+} else {
+    echo "La dirección IP no es válida.";
 }
+echo '</br>';
+echo "<pre>";
+print_r($coincidencias);
+echo "<pre>";
 
+echo '<h3>flags</h3>';
+$texto = 'foobarbaz';
+$patron = '/(foo)(bar)(baz)/';
+preg_match($patron, $texto, $coincidencias, PREG_OFFSET_CAPTURE);
+echo '</br>';
+echo "<pre>";
+print_r($coincidencias);
+echo "<pre>";
 
-echo "<h2>Preg_filter</h2>";
-echo "<h3>Eliminar todos los números de una cadena</h3>";
-$text = 'La contraseña es 1234-ABCD-5678';
-$text_without_numbers = preg_filter('/[0-9]/', '', $text);
-echo 'La contraseña sin números es: ' . $text_without_numbers;
+echo '<h2>preg_match_all</h2>';
 
-
-echo "</br>";
-echo "<h3>Remplazar los espacios en una cadena por guiones bajos:</h3>";
-$text = 'Esta es una cadena con espacios';
-$text_with_underscores = preg_filter('/\s/', '_', $text);
-echo 'La cadena con guiones bajos es: ' . $text_with_underscores;
-
-
-echo "</br>";
-echo "<h3>Eliminar todos los caracteres no alfanuméricos de una cadena:</h3>";
-$text = 'La contraseña es 1234-ABCD-5678';
-$text_without_special_chars = preg_filter('/[^a-zA-Z0-9]/', '', $text);
-echo 'La contraseña sin caracteres especiales es: ' . $text_without_special_chars;
-echo "</br>";
-
-
-echo "<h3>Reemplazar todas las ocurrencias de una palabra en una cadena con otra palabra:</h3>";
-$text = 'La lluvia en Sevilla es una maravilla';
-$new_text = preg_filter('/Sevilla/', 'Madrid', $text);
-echo 'El nuevo texto es: ' . $new_text;
-
-
-echo "<h3>Diferencia entre filter y replace</h3>";
-$sujeto = array('1', 'a', '2', 'b', '3', 'A', 'B', '4');
-$patrón = array('/\d/', '/[a-z]/', '/[1a]/');
-$sustitución = array('A:$0', 'B:$0', 'C:$0');
-
-echo "preg_filter devuelve\n";
-print_r(preg_filter($patrón, $sustitución, $sujeto));
-
-echo "preg_replace devuelve\n";
-print_r(preg_replace($patrón, $sustitución, $sujeto));
-
-echo "<h2>Preg_match_all</h2>";
-echo "<h3>Parejas de Vocales</h3>";
-$text = 'miau abuelo';
-$num =  preg_match_all('/[aeiou]{2,}/', $text, $matches); 
-
-
-echo "<h2>Preg_match_all</h2>";
-echo "<h3>Vocales</h3>";
-$text = 'La lluvia en Sevilla es una maravilla';
-if (preg_match_all('/[aeiou]/', $text, $matches)) {
-    echo 'Se encontraron las siguientes vocales: ' . implode(', ', $matches[0]);
+echo '<h3>Vocales</h3>';
+$texto = 'La lluvia en Sevilla es una maravilla';
+$patron = '/[aeiou]/';
+if (preg_match_all($patron, $texto, $coincidencias)) {
+    echo 'Se encontraron las siguientes vocales: ' . implode(', ', $coincidencias[0]);
 } else {
     echo 'No se encontraron vocales';
 }
+echo '</br>';
+echo "<pre>";
+print_r($coincidencias);
+echo "<pre>";
 
+echo '<h3>Grupos de dos o más Vocales</h3>';
+$texto = 'miau abuelo';
+$patron = '/[aeiou]{2,}/';
+echo preg_match_all($patron, $texto, $coincidencias);
+echo '</br>';
+echo "<pre>";
+print_r($coincidencias);
+echo "<pre>";
 
-echo "</br>";
-echo "<h3>Vocales</h3>";
-if (preg_match_all('/([aeiou])/', $text, $matches)) {
-    echo 'Se encontraron las siguientes vocales: ' . implode(', ', $matches[1]);
-} else {
-    echo 'No se encontraron vocales';
+echo '<h3>Encontrar todas las coincidencias de un patrón y sus subpatrones en una cadena que contiene comas como separadores:</h3>';
+$texto = 'rojo,verde,azul,amarillo';
+$patron = '/(\w+),?/';
+preg_match_all($patron, $texto, $coincidencias, PREG_SET_ORDER);
+foreach ($coincidencias as $coincidencia) {
+    echo $coincidencia[1] . '<br>';
 }
+echo '</br>';
+echo "<pre>";
+print_r($coincidencias);
+echo "<pre>";
 
-
-echo "</br>";
-echo "<h3>Encontrar todas las coincidencias de un patrón y sus subpatrones en una cadena:</h3>";
-$text = 'John Smith, 25 años Peter Floyd, 34 años';
-preg_match_all('/(\w+)\s(\w+),\s(\d+)\s(años)/', $text, $matches, PREG_SET_ORDER);
-foreach ($matches as $match) {
-    echo 'Nombre: ' . $match[1] . ' ' . $match[2] . ', Edad: ' . $match[3] . ' ' . $match[4] . '<br>';
+echo '<h3>Encontrar todas las coincidencias de un patrón y sus subpatrones en una cadena:</h3>';
+$texto = 'John Smith, 25 años Peter Floyd, 34 años';
+$patron = '/(\w+)\s(\w+),\s(\d+)\s(años)/';
+preg_match_all($patron, $texto, $coincidencias, PREG_SET_ORDER);
+foreach ($coincidencias as $coincidencia) {
+    echo 'Nombre: ' . $coincidencia[1] . ' ' . $coincidencia[2] . ', Edad: ' . $coincidencia[3] . ' ' . $coincidencia[4] . '<br>';
 }
+echo '</br>';
+echo "<pre>";
+print_r($coincidencias);
+echo "<pre>";
 
+echo '<h3>Encontrar todas las coincidencias de un patrón y sus subpatrones en una cadena:</h3>';
+$texto = 'John Smith, 25 años Peter Floyd, 34 años';
+$patron = '/(\w+)\s(\w+),\s(\d+)\s(años)/';
+preg_match_all($patron, $texto, $coincidencias, PREG_PATTERN_ORDER);
+echo 'Nombres: ' . $coincidencias[1][0] . ' ' . $coincidencias[1][1] . '</br>';
+echo 'Edades: ', $coincidencias[3][0] . ' ' . $coincidencias[3][1] . '</br>';
+echo '</br>';
+echo "<pre>";
+print_r($coincidencias);
+echo "<pre>";
 
-echo "</br>";
-echo "<h3>Encontrar todas las coincidencias de un patrón y sus subpatrones en una cadena con nombres de subpatrones:</h3>";
-$text = 'John Smith, 25 años';
-preg_match_all('/(?P<nombre>\w+)\s(?P<apellido>\w+),\s(?P<edad>\d+)\s(años)/', $text, $matches, PREG_SET_ORDER);
-foreach ($matches as $match) {
-    echo 'Nombre: ' . $match['nombre'] . ' ' . $match['apellido'] . ', Edad: ' . $match['edad'] . ' años<br>';
+echo '<h3>Encontrar todas las coincidencias de un patrón y sus subpatrones en una cadena con nombres de subpatrones:</h3>';
+$texto = 'John Smith, 25 años';
+$patron = '/(?P<nombre>\w+)\s(?P<apellido>\w+),\s(?P<edad>\d+)\s(años)/';
+preg_match_all($patron, $texto, $coincidencias, PREG_SET_ORDER);
+foreach ($coincidencias as $coincidencia) {
+    echo 'Nombre: ' . $coincidencia['nombre'] . ' ' . $coincidencia['apellido'] . ', Edad: ' . $coincidencia['edad'] . ' años<br>';
 }
-echo "</br>";
-echo "<h3>Encontrar todas las coincidencias de un patrón y sus subpatrones en una cadena que contiene comas como separadores:</h3>";
-$text = 'rojo,verde,azul,amarillo';
-preg_match_all('/(\w+),?/', $text, $matches, PREG_SET_ORDER);
-foreach ($matches as $match) {
-    echo $match[1] . '<br>';
-}
+echo '</br>';
+echo "<pre>";
+print_r($coincidencias);
+echo "<pre>";
 
-echo "<h2>Preg_filter</h2>";
-echo "<h3>Dividir una cadena en palabras        separadas por espacios:</h3>";
-$text = 'Esto es una cadena            de prueba';
-$words = preg_split('/\s+/', $text);
-print_r($words);
+echo '<h3>Encontrar todas las coincidencias de un patrón y sus subpatrones en una cadena con nombres de subpatrones:</h3>';
+$texto = <<<FOO
+a: 1
+b: 2
+c: 3
+FOO;
+$patron = '/(?P<nombre>\w+): (?P<digito>\d+)/';
 
-echo "</br>";
-echo "<h3>Dividir una cadena en partes separadas por comas o punto y coma:</h3>";
-$text = 'Manzanas, naranjas, plátanos; peras; kiwis, mangos';
-$fruits = preg_split('/[,;]\s*/', $text);
-print_r($fruits);
+preg_match_all($patron, $texto, $coincidencias);
+echo '</br>';
+echo "<pre>";
+print_r($coincidencias);
+echo "<pre>";
 
-echo "</br>";
-echo "<h3>Dividir una cadena en partes que contienen números solamente:</h3>";
-$text = 'abc123def456ghi789jkl';
-$parts = preg_split('/\D+/', $text);
-print_r($parts);
+echo '<h2>preg_replace</h2>';
 
-echo "</br>";
-echo "<h3>Dividir una cadena en partes que contienen números solamente:</h3>";
-$text = 'abc123def456ghi789jkl';
-$part2 = preg_split('/\D+/', $text, -1, PREG_SPLIT_OFFSET_CAPTURE);
-print_r($parts2);
+echo '<h3>Eliminar todos los números de una cadena</h3>';
+$texto = 'La contraseña es 1234-ABCD-5678';
+$patron = '/[0-9]/';
+$sustitucion = '';
 
+echo preg_replace($patron, $sustitucion, $texto);
 
+echo '<h3>Reemplazar todas las ocurrencias de una palabra en una cadena con otra palabra:</h3>';
+$texto = 'La lluvia en Sevilla es una maravilla';
+$patron = '/Sevilla/';
+$sustitucion = 'Madrid';
+echo $texto;
+echo '</br>';
+echo preg_replace($patron, $sustitucion, $texto);
+
+echo '<h3>Formatear Teléfono</h3>';
+$texto = 'Mis números de contacto son 1234567890, 123 456 7890 y (123)456-7890.';
+$patron = '/(\d{3})[ -]?(\d{3})[ -]?(\d{4})/';
+$sustitucion = '($1) $2-$3';
+echo $texto;
+echo '</br>';
+echo preg_replace($patron, $sustitucion, $texto);
+
+echo '<h3>Eliminar HTML tags de una cadena</h3>';
+$texto = '<p>Este es un <strong>ejemplo</strong> de texto con <a href="#">enlaces</a>.</p>';
+$patron = '/<[^>]*>/';
+$sustitucion = '';
+echo $texto;
+echo '</br>';
+echo preg_replace($patron, $sustitucion, $texto);
+
+echo '<h3>Reemplazar espacios por guiones</h3>';
+$texto = 'Este es un texto de ejemplo para     URL';
+$patron = '/\s+/';
+$sustitucion = '-';
+echo $texto;
+echo '</br>';
+echo preg_replace($patron, $sustitucion, $texto);
+
+echo '<h3>Capitalizar la primera letra de cada palabra</h3>';
+$texto = 'este es un texto de ejemplo';
+$patron = '/\b(\w)/';
+echo $texto;
+echo '</br>';
+echo preg_replace_callback($patron, function ($coincidencias) {
+    return strtoupper($coincidencias[1]);
+}, $texto);
+
+echo '</br>';
+echo '<h3>Ocultar parte de una dirección de correo electrónico</h3>';
+$texto = 'correo@example.com';
+$patron = '/(^.{2}).*(@.*?).{2}$/';
+$sustitucion = '$1***$2***';
+echo $texto;
+echo '</br>';
+echo preg_replace($patron, $sustitucion, $texto);
+
+echo '</br>';
+echo '<h3>Eliminar primera y última letra</h3>';
+$texto = 'Esta es una cadena de ejemplo';
+$patron = '/\b\w(\w*)\w\b/';
+$sustitucion = '$1';
+echo $texto;
+echo '</br>';
+echo preg_replace($patron, $sustitucion, $texto);
+
+echo '<h3>Remplazar los espacios en una cadena por guiones bajos:</h3>';
+$texto = ['Esta es una cadena con espacios', 'Estaesunacadenasinespacions'];
+$patron = '/\s/';
+$sustitucion = '_';
+echo '<pre>';
+print_r($texto);
+echo '<pre>';
+echo '</br>';
+echo '<pre>';
+print_r(preg_replace($patron, $sustitucion, $texto));
+echo '<pre>';
+
+echo '<h2>preg_filter</h2>';
+echo '<h3>Remplazar y filtrar los espacios en una cadena por guiones bajos:</h3>';
+$texto = ['Esta es una cadena con espacios', 'Estaesunacadenasinespacions'];
+$patron = '/\s/';
+$sustitucion = '_';
+echo '<pre>';
+print_r($texto);
+echo '<pre>';
+echo '</br>';
+echo '<pre>';
+print_r(preg_filter($patron, $sustitucion, $texto));
+echo '<pre>';
+
+echo '<h3>Diferencia entre filter y replace</h3>';
+$texto = array('1', 'a', '2', 'b', '3', 'A', 'B', '4');
+$patron = array('/\d/', '/[a-z]/', '/[1a]/');
+$sustitucion = array('A:$0', 'B:$0', 'C:$0');
+echo '<pre>';
+print_r($texto);
+echo '<pre>';
+echo 'preg_filter devuelve: <br>';
+echo '<pre>';
+print_r(preg_filter($patron, $sustitucion, $texto));
+echo '<pre>';
+echo 'preg_replace devuelve: <br>';
+echo '<pre>';
+print_r(preg_replace($patron, $sustitucion, $texto));
+echo '<pre>';
+
+echo '<h2>preg_split</h2>';
+echo '<h3>Dividir una cadena en palabras separadas por espacios:</h3>';
+$texto = 'Esto es una cadena            de prueba';
+echo '<pre>';
+print_r(preg_split('/\s+/', $texto));
+echo '<pre>';
+
+echo '<h3>Dividir una cadena en partes separadas por comas o punto y coma:</h3>';
+$texto = 'Manzanas, naranjas, plátanos; peras; kiwis, mangos';
+$patron = '/[,;]\s*/';
+echo '<pre>';
+print_r(preg_split($patron, $texto));
+echo '<pre>';
+
+echo '<h3>Dividir una cadena en partes que contienen números solamente:</h3>';
+$texto = 'abc123def456ghi789jkl';
+$patron = '/\D+/';
+echo '<pre>';
+print_r(preg_split($patron, $texto));
+echo '<pre>';
+
+echo '<h3>Dividir una cadena en partes que contienen números solamente:</h3>';
+$texto = 'abc123def456ghi789jkl';
+$patron = '/\D+/';
+echo '<pre>';
+print_r(preg_split($patron, $texto, -1, PREG_SPLIT_NO_EMPTY));
+echo '<pre>';
+
+echo '<h3>Dividir una cadena en partes que contienen números solamente:</h3>';
+$texto = 'abc123def456ghi789jkl';
+$patron = '/\D+/';
+echo '<pre>';
+print_r(preg_split($patron, $texto, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_OFFSET_CAPTURE));
+echo '<pre>';
