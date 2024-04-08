@@ -17,6 +17,10 @@ $patron = '/^([a-zA-Z]+\s*)+$/';
 if (preg_match($patron, $texto, $coincidencias)) {
     echo 'El nombre es: ' . $coincidencias[1];
 }
+echo '</br>';
+echo "<pre>";
+print_r($coincidencias);
+echo "<pre>";
 
 echo '<h3>Verificar si una cadena contiene una palabra específica</h3>';
 $texto = "Hola, bienvenido al tutorial de PHP.";
@@ -29,8 +33,8 @@ if (preg_match($patron, $texto)) {
 }
 
 echo '<h3>Correo electronico</h3>';
-$texto = 'user@ejemplo.com';
-$patron = '/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
+$texto = 'us-er@ejemplo.com';
+$patron = '/^([a-zA-Z0-9._-]+)@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
 if (preg_match($patron, $texto, $coincidencias)) {
     echo 'La dirección de correo electrónico ' . $texto . ' es válida';
 } else {
@@ -105,7 +109,7 @@ echo "<pre>";
 
 echo '<h3>Protocolo, dominio y ruta de una URL</h3>';
 $texto = 'https://www.ejemplo.com/ejemplo/ruta';
-$patron = '/^(\w+):\/\/([\w\.]+)\/(.*)$/';
+$patron = '/^(\w+):\/\/([\w.]+)\/(.*)$/';
 if (preg_match($patron, $texto, $coincidencias)) {
     echo 'El protocolo es: ' . $coincidencias[1] . ', el dominio es: ' . $coincidencias[2] . ' y la ruta es: ' . $coincidencias[3];
 } else {
@@ -117,7 +121,7 @@ print_r($coincidencias);
 echo "<pre>";
 
 echo '<h3>Dirección IP</h3>';
-$texto = '192.168.0.1';
+$texto = '253.168.75.1';
 $patron = '/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/';
 if (preg_match($patron, $texto, $coincidencias)) {
     echo 'La dirección IP ' . $texto . ' es válida';
