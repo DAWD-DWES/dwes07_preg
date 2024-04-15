@@ -2,6 +2,16 @@
 
 echo '<h2>preg_match</h2>';
 
+echo '<h3>Verificar si una cadena contiene una palabra específica</h3>';
+$texto = "Hola, bienvenido al tutorial de PHP.";
+$palabra = "tutorial";
+$patron = "/$palabra/i";
+if (preg_match($patron, $texto)) {
+    echo "La palabra '$palabra' fue encontrada en el texto.";
+} else {
+    echo "La palabra '$palabra' no fue encontrada en el texto.";
+}
+
 echo '<h3>Comprobar si una cadena contiene solo dígitos</h3>';
 $texto = "123456";
 $patron = "/^\d+$/";
@@ -21,16 +31,6 @@ echo '</br>';
 echo "<pre>";
 print_r($coincidencias);
 echo "<pre>";
-
-echo '<h3>Verificar si una cadena contiene una palabra específica</h3>';
-$texto = "Hola, bienvenido al tutorial de PHP.";
-$palabra = "tutorial";
-$patron = "/$palabra/i";
-if (preg_match($patron, $texto)) {
-    echo "La palabra '$palabra' fue encontrada en el texto.";
-} else {
-    echo "La palabra '$palabra' no fue encontrada en el texto.";
-}
 
 echo '<h3>Correo electronico</h3>';
 $texto = 'us-er@ejemplo.com';
@@ -149,7 +149,7 @@ echo "<pre>";
 print_r($coincidencias);
 echo "<pre>";
 
-echo '<h3>flags</h3>';
+echo '<h3>Uso del flag PREG_OFFSET_CAPTURE</h3>';
 $texto = 'foobarbaz';
 $patron = '/(foo)(bar)(baz)/';
 preg_match($patron, $texto, $coincidencias, PREG_OFFSET_CAPTURE);
@@ -183,8 +183,17 @@ print_r($coincidencias);
 echo "<pre>";
 
 echo '<h3>Encontrar todas las coincidencias de un patrón y sus subpatrones en una cadena que contiene comas como separadores:</h3>';
-$texto = 'rojo,verde,azul,amarillo';
-$patron = '/(\w+),?/';
+$texto = 'He comprado 5 manzanas y 12 naranjas';
+$patron = '/(\d+) (\w+)/';
+preg_match_all($patron, $texto, $coincidencias, PREG_PATTERN_ORDER);
+foreach ($coincidencias as $coincidencia) {
+    echo $coincidencia[1] . '<br>';
+}
+echo '</br>';
+echo "<pre>";
+print_r($coincidencias);
+echo "<pre>";
+
 preg_match_all($patron, $texto, $coincidencias, PREG_SET_ORDER);
 foreach ($coincidencias as $coincidencia) {
     echo $coincidencia[1] . '<br>';
@@ -193,6 +202,7 @@ echo '</br>';
 echo "<pre>";
 print_r($coincidencias);
 echo "<pre>";
+
 
 echo '<h3>Encontrar todas las coincidencias de un patrón y sus subpatrones en una cadena:</h3>';
 $texto = 'John Smith, 25 años Peter Floyd, 34 años';
